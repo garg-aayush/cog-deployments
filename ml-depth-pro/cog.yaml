@@ -1,0 +1,10 @@
+build:
+  gpu: true
+  cuda: "12.1"
+  python_version: "3.9"
+  python_packages:
+    - "pillow==10.4.0"
+    - "numpy==1.26.4"
+    - "huggingface-hub==0.25.2"
+    - "depth_pro @ git+https://github.com/apple/ml-depth-pro@b2cd0d51daa95e49277a9f642f7fd736b7f9e91d"
+predict: "predict.py:Predictor"
