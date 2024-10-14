@@ -31,7 +31,7 @@ def predict_depth(image: Image.Image, auto_rotate: bool, remove_alpha: bool, mod
     focallength = prediction["focallength_px"].cpu().numpy()
 
     # Normalize and colorize depth map
-    cmap = plt.get_cmap("turbo_r")
+    cmap = plt.get_cmap("turbo")
     color_depth = (cmap(inverse_depth_normalized)[..., :3] * 255).astype(np.uint8)
 
     # Clean up temporary image
