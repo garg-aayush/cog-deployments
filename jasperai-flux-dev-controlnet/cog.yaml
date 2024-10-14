@@ -1,0 +1,16 @@
+build:
+  gpu: true
+  cuda: "11.8"
+  python_version: "3.11.10"
+  python_packages:
+    - "diffusers @ git+https://github.com/huggingface/diffusers@e16fd93d0a40156c1f49fde07f6f2eb438983927"
+    - "torch==2.4.1"
+    - "ftfy==6.2.3"
+    - "scipy==1.14.1"
+    - "transformers==4.45.2"
+    - "accelerate==1.0.0"
+    - "huggingface-hub==0.25.2"
+    - "protobuf==5.28.2"
+    - "sentencepiece==0.2.0"
+
+predict: "predict.py:Predictor"
