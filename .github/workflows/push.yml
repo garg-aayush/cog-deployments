@@ -13,6 +13,10 @@ on:
                 description: "Local folder name containing the model"
                 default: "ml-depth-pro"
                 required: true
+    
+    push:
+        branches:
+            - main
 
 
 jobs:
@@ -39,5 +43,5 @@ jobs:
                 token: ${{ secrets.REPLICATE_API_TOKEN }}
             
             - name: Push to Replicate
-              working-directory: ${{ inputs.folder_name }}
-              run: cog push r8.im/${{ inputs.model_name }}
+              working-directory: ${{ inputs.folder_name || vars.DEFAULT_FOLDER_NAME }}
+              run: cog push r8.im/${{ inputs.model_name || vars.DEFAULT_MODEL_NAME }}
