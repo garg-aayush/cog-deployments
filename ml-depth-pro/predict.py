@@ -9,6 +9,7 @@ import torch
 from cog import BasePredictor, Input, Path
 import time
 import subprocess
+import urllib.request
 
 WEIGHTS_URL = "https://ml-site.cdn-apple.com/models/depth-pro/depth_pro.pt"
 WEIGHTS_DIR = "checkpoints"
@@ -17,8 +18,14 @@ def download_weights(url, dest):
     start = time.time()
     print("downloading url: ", url)
     print("downloading to: ", dest)
-    subprocess.check_call(["pget", "-x", url, dest], close_fds=False)
+    
+    # Create directory if it doesn't exist
+    os.makedirs(os.path.dirname(dest), exist_ok=True)
+    
+    # Download the file using urllib
+    urllib.request.urlretrieve(url, dest)
     print("downloading took: ", time.time() - start)
+
 
 class Predictor(BasePredictor):
     def setup(self, device: str = "cuda"):
