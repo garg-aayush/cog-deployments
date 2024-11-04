@@ -7,6 +7,18 @@ from pathlib import Path
 import os
 import torch
 
+class Predictor:
+    def __init__(self, device: str = "cuda"):
+        """Initialize the Predictor with model and transforms."""
+        self.device = torch.device(device)
+        self.model, self.transform = depth_pro.create_model_and_transforms(device=self.device)
+        self.model.eval()
+
+    def predict(self, image: Image.Image, auto_rotate: bool = True, remove_alpha: bool = True):
+        """Predict depth from a single image."""
+        return predict_depth(image, auto_rotate, remove_alpha, self.model, self.transform)
+
+
 def predict_depth(image: Image.Image, auto_rotate: bool, remove_alpha: bool, model, transform):
     # Convert the PIL image to a temporary file path if needed
     image_path = "temp_image.jpg"
@@ -51,6 +63,7 @@ def main():
     depth_image, focallength = predict_depth(image, auto_rotate, remove_alpha, model, transform)
     depth_image.save("depth_image.png")
     print(f"Focal length: {focallength}")
+
 
 if __name__ == "__main__":
     main()

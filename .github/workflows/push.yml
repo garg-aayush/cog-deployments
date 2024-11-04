@@ -5,9 +5,15 @@ on:
         inputs:
             model_name:
                 type: string
-                description: "Model name on Replicate"
+                description: "Model name on Replicate (format: username/model-name)"
                 default: "garg-aayush/ml-depth-pro"
                 required: true
+            folder_name:
+                type: string
+                description: "Local folder name containing the model"
+                default: "ml-depth-pro"
+                required: true
+
 
 jobs:
     push_to_replicate:
@@ -33,5 +39,5 @@ jobs:
                 token: ${{ secrets.REPLICATE_API_TOKEN }}
             
             - name: Push to Replicate
-              working-directory: ml-depth-pro
+              working-directory: ${{ inputs.folder_name }}
               run: cog push r8.im/${{ inputs.model_name }}
