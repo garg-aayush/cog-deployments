@@ -33,7 +33,7 @@ class Predictor(BasePredictor):
     def setup(self, device: str = "cuda"):
         """Initialize the Predictor with model and transforms."""
         if not os.path.exists(WEIGHTS_DIR):
-            download_weights(WEIGHTS_URL, WEIGHTS_DIR)
+            download_weights(WEIGHTS_URL, WEIGHTS_DIR, WEIGHTS_FILE)
         
         self.device = torch.device(device)
         self.model, self.transform = depth_pro.create_model_and_transforms(device=self.device)
