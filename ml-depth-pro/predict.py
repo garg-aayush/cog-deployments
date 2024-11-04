@@ -12,7 +12,7 @@ import subprocess
 
 WEIGHTS_FILE = "depth_pro.pt"
 WEIGHTS_URL = "https://ml-site.cdn-apple.com/models/depth-pro/" + WEIGHTS_FILE
-WEIGHTS_DIR = "checkpoints"
+WEIGHTS_DIR = "checkpoints/"
 import urllib.request
 
 
@@ -25,7 +25,7 @@ def download_weights(url, dest, name):
     os.makedirs(os.path.dirname(dest), exist_ok=True)
 
     # Download the file using urllib
-    urllib.request.urlretrieve(url, dest + "/" + name)
+    urllib.request.urlretrieve(url, dest +  name)
     print("downloading took: ", time.time() - start)
 
 
