@@ -7,10 +7,25 @@ from pathlib import Path
 import os
 import torch
 from cog import BasePredictor, Input, Path
+import time
+import subprocess
+
+WEIGHTS_URL = "https://ml-site.cdn-apple.com/models/depth-pro/depth_pro.pt"
+WEIGHTS_DIR = "checkpoints"
+
+def download_weights(url, dest):
+    start = time.time()
+    print("downloading url: ", url)
+    print("downloading to: ", dest)
+    subprocess.check_call(["pget", "-x", url, dest], close_fds=False)
+    print("downloading took: ", time.time() - start)
 
 class Predictor(BasePredictor):
     def setup(self, device: str = "cuda"):
         """Initialize the Predictor with model and transforms."""
+        if not os.path.exists(WEIGHTS_DIR):
+            download_weights(WEIGHTS_URL, WEIGHTS_DIR)
+        
         self.device = torch.device(device)
         self.model, self.transform = depth_pro.create_model_and_transforms(device=self.device)
         self.model.eval()
