@@ -3,7 +3,7 @@ name: Push models to Replicate
 on:
     workflow_dispatch:
         inputs:
-            model_name: garg-aayush/ml-depth-pro
+            model_name: "garg-aayush/ml-depth-pro"
             required: true
 
 jobs:
