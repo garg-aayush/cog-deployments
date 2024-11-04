@@ -9,21 +9,23 @@ import torch
 from cog import BasePredictor, Input, Path
 import time
 import subprocess
+
+WEIGHTS_FILE = "depth_pro.pt"
+WEIGHTS_URL = "https://ml-site.cdn-apple.com/models/depth-pro/" + WEIGHTS_FILE
+WEIGHTS_DIR = "checkpoints"
 import urllib.request
 
-WEIGHTS_URL = "https://ml-site.cdn-apple.com/models/depth-pro/depth_pro.pt"
-WEIGHTS_DIR = "checkpoints"
 
-def download_weights(url, dest):
+def download_weights(url, dest, name):
     start = time.time()
     print("downloading url: ", url)
     print("downloading to: ", dest)
     
     # Create directory if it doesn't exist
     os.makedirs(os.path.dirname(dest), exist_ok=True)
-    
+
     # Download the file using urllib
-    urllib.request.urlretrieve(url, dest)
+    urllib.request.urlretrieve(url, dest + "/" + name)
     print("downloading took: ", time.time() - start)
 
 
