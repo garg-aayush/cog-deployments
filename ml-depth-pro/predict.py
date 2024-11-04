@@ -61,7 +61,7 @@ class Predictor(BasePredictor):
 
 def predict_depth(image: Image.Image, auto_rotate: bool, remove_alpha: bool, model, transform):
     # Convert the PIL image to a temporary file path if needed
-    image_path = "temp_image.jpg"
+    image_path = "temp_image.png"
     image.save(image_path)
 
     # Load and preprocess the image from the given path
