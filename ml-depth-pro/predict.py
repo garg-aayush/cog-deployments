@@ -6,17 +6,33 @@ from typing import Union
 from pathlib import Path
 import os
 import torch
+from cog import BasePredictor, Input, Path
 
-class Predictor:
+class Predictor(BasePredictor):
     def setup(self, device: str = "cuda"):
         """Initialize the Predictor with model and transforms."""
         self.device = torch.device(device)
         self.model, self.transform = depth_pro.create_model_and_transforms(device=self.device)
         self.model.eval()
 
-    def predict(self, image: Image.Image, auto_rotate: bool = True, remove_alpha: bool = True):
+    def predict(
+        self, 
+        image: Path = Input(description="Input image file"),
+        auto_rotate: bool = Input(description="Auto-rotate image based on EXIF", default=True),
+        remove_alpha: bool = Input(description="Remove alpha channel if present", default=True)
+    ) -> Path:
         """Predict depth from a single image."""
-        return predict_depth(image, auto_rotate, remove_alpha, self.model, self.transform)
+        # Load the image from path
+        input_image = Image.open(image)
+        
+        # Get the prediction
+        depth_image, focallength = predict_depth(input_image, auto_rotate, remove_alpha, self.model, self.transform)
+        
+        # Save and return the result
+        print(f"focal length: {focallength}")
+        output_path = Path("output.png")
+        depth_image.save(str(output_path))
+        return output_path
 
 
 def predict_depth(image: Image.Image, auto_rotate: bool, remove_alpha: bool, model, transform):
