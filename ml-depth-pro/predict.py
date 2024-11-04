@@ -8,7 +8,7 @@ import os
 import torch
 
 class Predictor:
-    def __init__(self, device: str = "cuda"):
+    def setup(self, device: str = "cuda"):
         """Initialize the Predictor with model and transforms."""
         self.device = torch.device(device)
         self.model, self.transform = depth_pro.create_model_and_transforms(device=self.device)
