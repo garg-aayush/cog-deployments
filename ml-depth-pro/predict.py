@@ -51,19 +51,20 @@ def predict_depth(image: Image.Image, auto_rotate: bool, remove_alpha: bool, mod
 
     return Image.fromarray(color_depth), focallength  # Return depth map and f_px
 
-def main():
-    # Load model and preprocessing transform
-    model, transform = depth_pro.create_model_and_transforms(device=torch.device("cuda"))
-    model.eval()
+# can't run this in Github Actions as it requires a GPU
+# def main():
+#     # Load model and preprocessing transform
+#     model, transform = depth_pro.create_model_and_transforms(device=torch.device("cuda"))
+#     model.eval()
     
-    auto_rotate = True
-    remove_alpha = True
-    image = Image.open("example.jpg")
+#     auto_rotate = True
+#     remove_alpha = True
+#     image = Image.open("example.jpg")
 
-    depth_image, focallength = predict_depth(image, auto_rotate, remove_alpha, model, transform)
-    depth_image.save("depth_image.png")
-    print(f"Focal length: {focallength}")
+#     depth_image, focallength = predict_depth(image, auto_rotate, remove_alpha, model, transform)
+#     depth_image.save("depth_image.png")
+#     print(f"Focal length: {focallength}")
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
